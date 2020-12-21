@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CanTeenVLU.Models.ACCOUNT>
+
+@{
+    ViewBag.Title = "Tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="font-family:'Times New Roman', Times, serif">Danh sách tài khoản</h2>
+
+<button style="border-radius:24px; font-family:'Times New Roman', Times, serif">
+    @Html.ActionLink("Tạo mới", "Create")
+</button>
+
+<hr />
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-family:'Times New Roman', Times, serif">Bảng danh sách tài khoản</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr style="font-family:'Times New Roman', Times, serif">
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Hình ảnh</th>
+                                <th>Họ tên</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EMAIL)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PASSWORD)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FULL_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STATUS)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ROLE)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                                    @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
+                                    @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { onclick = "return confirm('Bạn có chắc chắn muốn xoá không?');" })
+                                </td>
+                            </tr>
+                        }
+                        <tfoot>
+                            <tr style="font-family:'Times New Roman', Times, serif">
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Hình ảnh</th>
+                                <th>Họ tên</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+</section>

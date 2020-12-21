@@ -1,0 +1,62 @@
+﻿@model CanTeenVLU.Models.ACCOUNT
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <h3 style="font-family:'Times New Roman', Times, serif">Bạn có chắc chắn muốn xoá tài khoản này không?</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Email</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMAIL)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Password</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PASSWORD)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Họ tên</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FULL_NAME)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Trạng thái</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Quyền</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ROLE)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xoá" class="btn btn-default" /> |
+            @Html.ActionLink("Trở lại", "Index")
+        </div>
+    }
+</div>

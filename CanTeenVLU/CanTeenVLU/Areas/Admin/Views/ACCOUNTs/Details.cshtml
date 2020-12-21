@@ -1,0 +1,57 @@
+﻿@model CanTeenVLU.Models.ACCOUNT
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <h2 style="font-family:'Times New Roman', Times, serif">Chi tiết tài khoản</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Email</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMAIL)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Password</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PASSWORD)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Họ tên</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FULL_NAME)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Trạng thái</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Quyền</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ROLE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Trở lại", "Index")
+</p>
