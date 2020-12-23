@@ -1,0 +1,147 @@
+﻿@model CanTeenVLU.Models.ORDER
+@{
+    Layout = null;
+    int i = 1;
+    int total = 0;
+}
+
+<!DOCTYPE html>
+<!--
+  Invoice template by invoicebus.com
+  To customize this template consider following this guide https://invoicebus.com/how-to-create-invoice-template/
+  This template is under Invoicebus Template License, see https://invoicebus.com/templates/license/
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hoá đơn</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Invoicebus Invoice Template">
+    <meta name="author" content="Invoicebus">
+
+    <meta name="template-hash" content="baadb45704803c2d1a1ac3e569b757d5">
+
+    <link href="~/Content/css1/template.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="container">
+        <section id="memo">
+            <div class="logo">
+                <img src="~/Images/logovanlang.png" />
+            </div>
+
+            <div class="company-info">
+                <div>Trường Đại học Văn Lang</div>
+                <br />
+                <span>Trụ sở: 45 Nguyễn Khắc Nhu, P. Cô Giang, Q.1, TP. HCM</span>
+                <br />
+                <span>Cơ sở 2: 233A Phan Văn Trị, P.11, Q. Bình Thạnh, TP. HCM</span>
+                <br />
+                <span>Cơ sở 3: 69/68 Đặng Thùy Trâm, P. 13, Q. Bình Thạnh, TP. HCM</span>
+                <br />
+                <span>https://www.vanlanguni.edu.vn/</span>
+            </div>
+        </section>
+
+        <section id="invoice-title-number">
+
+            <span id="title" style="font-family:'Times New Roman', Times, serif">HOÁ ĐƠN BÁN HÀNG</span>
+            <br />
+            <br />
+            <span id="number" style="text-indent:100px">#@Model.ORDER_CODE</span>
+
+        </section>
+
+        <div class="clearfix"></div>
+
+        <section id="client-info">
+            <div>
+                <span><b>Họ tên: </b>@Model.ACCOUNT.FULL_NAME</span>
+            </div>
+            <div>
+                <span><b>Email: </b>@Model.ACCOUNT.EMAIL</span>
+            </div>
+        </section>
+
+        <div class="clearfix"></div>
+
+        <section id="items">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>STT</th> <!-- Dummy cell for the row number and row commands -->
+                    <th style="text-align:center">Tên sản phẩm</th>
+                    <th style="text-align:center">Số lượng</th>
+                    <th style="text-align:center">Đơn giá</th>
+                    <th style="text-align:center">Thành tiền</th>
+                </tr>
+                @foreach (var orderDatail in Model.ORDER_DETAIL)
+                {
+                    total += (orderDatail.PRICE * orderDatail.QUANTITY);
+                    <tr data-iterate="item">
+                        <td style="text-align:center">@i</td> <!-- Don't remove this column as it's needed for the row commands -->
+                        <td>@orderDatail.MENU.FOOD.FOOD_NAME</td>
+                        <td style="text-align:center">@string.Format("{0:#,#.}", orderDatail.QUANTITY)</td>
+                        <td style="text-align:center">@string.Format("{0:#,#.}", orderDatail.PRICE)</td>
+                        <td>@string.Format("{0:#,#.}", (orderDatail.PRICE * orderDatail.QUANTITY))</td>
+                    </tr>
+                }
+            </table>
+        </section>
+
+        <section id="sums">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Số lượng</th>
+                    <td> @(Model.ORDER_DETAIL.Select(x => x.QUANTITY).Sum())</td>
+                </tr>
+                <tr data-iterate="tax">
+                    <th>Thành tiền</th>
+                    <td>@string.Format("{0:#,#.}", total) VND</td>
+                </tr>
+                <tr data-hide-on-quote="true">
+                    <th>Tiền thanh toán</th>
+                    <td>@string.Format("{0:#,#.}", total) VND</td>
+                </tr>
+            </table>
+            <div class="clearfix"></div>
+        </section>
+
+        <div class="clearfix"></div>
+
+        <section id="invoice-info">
+            <div>
+                <span>Ngày lập:</span> <span>@Model.DATE</span>
+            </div>
+            <br />
+            <div>
+                <span>Mệnh giá:</span> <span>VNĐ</span>
+            </div>
+        </section>
+
+        <section id="terms">
+
+            <div class="notes">Lưu ý:</div>
+            <br />
+            <div class="payment-info">
+                <div>Hàng mua rồi không trả lại.</div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <div class="thank-you" style="text-align:center">Cảm ơn Quý khách, hẹn gặp lại!</div>
+        <div class="clearfix"></div>
+        <button onclick="window.print()" class="animated-button1">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            In hoá đơn
+        </button>
+    </div>
+
+    <script src="~/Scripts/data.js"></script>
+    <script src="http://cdn.invoicebus.com/generator/generator.min.js?data=data.js"></script>
+</body>
+</html>

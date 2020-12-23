@@ -58,7 +58,8 @@
                                 <td>
                                     @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
                                     @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
-                                    @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { onclick = "return confirm('Bạn có chắc chắn muốn xoá không?');" })
+                                    @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { onclick = "return confirm('Bạn có chắc chắn muốn xoá không?');" }) |
+                                    @Html.ActionLink("In", "Print", new { id = item.ID })
                                 </td>
                             </tr>
                         }

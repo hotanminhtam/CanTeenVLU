@@ -199,6 +199,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css1\template.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\dataTables.bootstrap4.css" />
@@ -217,12 +218,19 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\7up.png" />
     <Content Include="Images\AdminLTELogo.png" />
+    <Content Include="Images\banhxeo.jpg" />
     <Content Include="Images\che.jpg" />
     <Content Include="Images\coca.jpg" />
     <Content Include="Images\com.jpg" />
     <Content Include="Images\comchientrung.jpg" />
     <Content Include="Images\comgakho.jpg" />
+    <Content Include="Images\img\bg.png" />
+    <Content Include="Images\img\total-stripe-firebrick.png" />
+    <Content Include="Images\img\total-stripe-gold.png" />
+    <Content Include="Images\img\total-stripe-turquoise.png" />
+    <Content Include="Images\logovanlang.png" />
     <Content Include="Images\monnuoc.jpg" />
+    <Content Include="Images\sinhto.jpg" />
     <Content Include="Images\thucuong.jpg" />
     <Content Include="Images\user2-160x160.jpg" />
     <Content Include="Models\Model1.Context.tt">
@@ -242,6 +250,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Scripts\data.js" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
     <Content Include="webfonts\fa-solid-900.svg" />
@@ -278,6 +287,8 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Views\Auth\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\ORDERs\Print.cshtml" />
+    <Content Include="fonts\SourceSansPro-Regular.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\dashboard.js" />

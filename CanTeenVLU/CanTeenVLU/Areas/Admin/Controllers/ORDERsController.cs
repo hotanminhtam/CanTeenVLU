@@ -126,6 +126,12 @@ namespace CanTeenVLU.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Print(int id)
+        {
+            var printBill = db.ORDERs.FirstOrDefault(x => x.ID == id);
+            return View(printBill);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
