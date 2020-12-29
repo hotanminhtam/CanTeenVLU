@@ -30,7 +30,7 @@
                                 <th>Trạng thái</th>
                                 <th>Phản hồi</th>
                                 <th>Email</th>
-                                <th>Tài khoản</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
 
@@ -53,9 +53,6 @@
                                     @Html.DisplayFor(modelItem => item.ACCOUNT.EMAIL)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.CUSTOMER.EMAIL)
-                                </td>
-                                <td>
                                     @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
                                     @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
                                     @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { onclick = "return confirm('Bạn có chắc chắn muốn xoá không?');" }) |
@@ -70,7 +67,7 @@
                                 <th>Trạng thái</th>
                                 <th>Phản hồi</th>
                                 <th>Email</th>
-                                <th>Tài khoản</th>
+                                <th>Hành động</th>
                             </tr>
                         </tfoot>
                     </table>
