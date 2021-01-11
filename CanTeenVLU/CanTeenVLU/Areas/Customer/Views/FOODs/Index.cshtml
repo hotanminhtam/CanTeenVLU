@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<CanTeenVLU.Models.FOOD>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -244,28 +246,30 @@
                         <h2 class="title text-center">THỰC ĐƠN</h2>
                         @foreach (var products in Model)
                         {
-                            <div class="col-lg-3">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="@Url.Action("Details", new { products.ID })">
-                                                <img src="@Url.Action("Picture","FOODs", new { products.ID})" alt="" />
-                                            </a>
-                                            <h4><a href="@Url.Action("Details", new { products.ID })">@products.FOOD_NAME</a></h4>
-                                            <h2><a href="@Url.Action("Details", new { products.ID })">@products.PRICE.ToString("N0")</a></h2>
-                                            <form action="@Url.Action("Create", "ShoppingCart")" method="post">
-                                                <div class="choose">
-                                                    <ul class="nav nav-pills nav-justified">
-                                                        <li><a href="#"><i class="fa fa-plus-square"></i>Yêu thích</a></li>
-                                                        <li><a href="#"><i class="fa fa-plus-square"></i>Thêm giỏ</a></li>
-                                                    </ul>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+            <div class="col-lg-3">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <a href="@Url.Action("Details", new { products.ID })">
+                                <img src="@Url.Action("Picture","FOODs", new { products.ID})" alt="" />
+                            </a>
+                            <h4><a href="@Url.Action("Details", new { products.ID })">@products.FOOD_NAME</a></h4>
+                            <h2><a href="@Url.Action("Details", new { products.ID })">@products.PRICE.ToString("N0")</a></h2>
+                            <form action="@Url.Action("Create", "ORDER_DETAIL")" method="post">
+                                <input type="hidden" name="ProductId" value="@products.ID" />
+                                <div class="col-md-offset-5">
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="1">
                                 </div>
-                            </div>
-                        }
+                                <div class="add_to_cart">
+                                    <i class="fas fa-cart-plus fa-2x">
+                                        <input type="submit" class="btn btn-default add-to-cart" value="Thêm giỏ hàng" />
+                                    </i>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>}
                     </div>
                 </div><!--features_items-->
             </div>
