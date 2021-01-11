@@ -78,7 +78,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         @if ((int)Session["user-role"] == 2)
                         {
                             <li class="nav-item has-treeview menu-open">
@@ -230,6 +230,9 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
     <!-- jQuery -->
     <script src="~/Scripts/jquery.min.js"></script>
     <script>

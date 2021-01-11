@@ -6,7 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "CATEGORies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -26,8 +26,8 @@
         <div class="form-group">
             <label class="control-label col-md-2" style="font-family:'Times New Roman', Times, serif" for="IMG">Hình ảnh</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IMAGE_URL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IMAGE_URL, "", new { @class = "text-danger" })
+                <input class="form-control" type="file" name="Picture" id="IMG" onchange="readPicture(this)" accept="image/jpeg,image/gif,image/png" />
+                <img id="Picture" width="300" />
             </div>
         </div>
 
@@ -48,4 +48,19 @@
             </div>
         </div>
     </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function readPicture(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('img#Picture').attr('src', e.target.result).width(200).height(250);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 }

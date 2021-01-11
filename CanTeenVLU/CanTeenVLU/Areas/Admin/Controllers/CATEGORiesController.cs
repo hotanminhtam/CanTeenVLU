@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using CanTeenVLU.Areas.Admin.Middleware;
@@ -38,6 +39,11 @@ namespace CanTeenVLU.Areas.Admin.Controllers
             }
             return View(cATEGORY);
         }
+        public ActionResult Picture(int id)
+        {
+            var path = Server.MapPath(PICTURE_PATH);
+            return File(path + id, "images");
+        }
 
         // GET: Admin/CATEGORies/Create
         public ActionResult Create()
@@ -50,16 +56,29 @@ namespace CanTeenVLU.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CATEGORY_CODE,CATEGORY_NAME,IMAGE_URL,STATUS")] CATEGORY cATEGORY)
+        public ActionResult Create([Bind(Include = "ID,CATEGORY_CODE,CATEGORY_NAME,IMAGE_URL,STATUS")] CATEGORY cATEGORY, HttpPostedFileBase picture)
         {
-            if (ModelState.IsValid)
+            var product = new CATEGORY();
+            if (picture != null)
             {
-                db.CATEGORies.Add(cATEGORY);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                using (var scope = new TransactionScope())
+                {
+                    product.CATEGORY_CODE = cATEGORY.CATEGORY_CODE;
+                    product.CATEGORY_NAME = cATEGORY.CATEGORY_NAME;
+                    product.STATUS = cATEGORY.STATUS;
+                    db.CATEGORies.Add(product);
+                    db.SaveChanges();
 
-            return View(cATEGORY);
+                    var path = Server.MapPath(PICTURE_PATH);
+                    picture.SaveAs(path + product.ID);
+                    scope.Complete();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Picture not found!");
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/CATEGORies/Edit/5
@@ -82,13 +101,32 @@ namespace CanTeenVLU.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CATEGORY_CODE,CATEGORY_NAME,IMAGE_URL,STATUS")] CATEGORY cATEGORY)
+        public ActionResult Edit([Bind(Include = "ID,CATEGORY_CODE,CATEGORY_NAME,IMAGE_URL,STATUS")]int id, CATEGORY cATEGORY, HttpPostedFileBase picture)
         {
+            var product = db.CATEGORies.Find(id);
             if (ModelState.IsValid)
             {
-                db.Entry(cATEGORY).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (var scope = new TransactionScope())
+                {
+                    product.ID = cATEGORY.ID;
+                    product.CATEGORY_CODE = cATEGORY.CATEGORY_CODE;
+                    product.CATEGORY_NAME = cATEGORY.CATEGORY_NAME;
+                    product.STATUS = cATEGORY.STATUS;
+
+                    db.Entry(product).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    if (picture != null)
+                    {
+                        //System.IO.File.WriteAllText(@"D:\test.txt", "ok");
+                        var path = Server.MapPath(PICTURE_PATH);
+                        picture.SaveAs(path + cATEGORY.ID);
+                    }
+
+                    scope.Complete();
+                    return RedirectToAction("Index");
+
+                }
             }
             return View(cATEGORY);
         }

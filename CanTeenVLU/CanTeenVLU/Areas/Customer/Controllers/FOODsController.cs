@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CanTeenVLU.Models;
 using CanTeenVLU.Areas.Admin.Middleware;
+using System.Transactions;
 
 namespace CanTeenVLU.Areas.Customer.Controllers
 {
@@ -15,15 +16,29 @@ namespace CanTeenVLU.Areas.Customer.Controllers
     public class FOODsController : Controller
     {
         private QUANLYCANTEENEntities db = new QUANLYCANTEENEntities();
+        private const string PICTURE_PATH = "~/Upload/Foods/";
 
-        // GET: Customer/FOODs
+        // GET: Admin/FOODs
         public ActionResult Index()
         {
             var fOODs = db.FOODs.Include(f => f.CATEGORY);
             return View(fOODs.ToList());
         }
+        public ActionResult Picture(int id)
+        {
+            var path = Server.MapPath(PICTURE_PATH);
+            return File(path + id, "images");
+        }
 
-        // GET: Customer/FOODs/Details/5
+        //for customers to view products
+        [AllowAnonymous]
+        public ActionResult Index2()
+        {
+            var model = db.FOODs.ToList();
+            return View(model);
+        }
+
+        // GET: Admin/FOODs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,32 +53,50 @@ namespace CanTeenVLU.Areas.Customer.Controllers
             return View(fOOD);
         }
 
-        // GET: Customer/FOODs/Create
+        // GET: Admin/FOODs/Create
         public ActionResult Create()
         {
             ViewBag.CATEGORY_ID = new SelectList(db.CATEGORies, "ID", "CATEGORY_CODE");
             return View();
         }
 
-        // POST: Customer/FOODs/Create
+        // POST: Admin/FOODs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FOOD_CODE,FOOD_NAME,CATEGORY_ID,DESCRIPTION,PRICE,IMAGE_URL,STATUS")] FOOD fOOD)
+        public ActionResult Create([Bind(Include = "ID,FOOD_CODE,FOOD_NAME,CATEGORY_ID,DESCRIPTION,PRICE,IMAGE_URL,STATUS")] FOOD fOOD, HttpPostedFileBase picture)
         {
             if (ModelState.IsValid)
             {
-                db.FOODs.Add(fOOD);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                var product = new FOOD();
+                if (picture != null)
+                {
+                    using (var scope = new TransactionScope())
+                    {
+                        product.ID = fOOD.ID;
+                        product.FOOD_CODE = fOOD.FOOD_CODE;
+                        product.FOOD_NAME = fOOD.FOOD_NAME;
+                        product.CATEGORY_ID = fOOD.CATEGORY_ID;
+                        product.DESCRIPTION = fOOD.DESCRIPTION;
+                        product.PRICE = fOOD.PRICE;
+                        product.STATUS = fOOD.STATUS;
+                        db.FOODs.Add(product);
+                        db.SaveChanges();
 
+                        var path = Server.MapPath(PICTURE_PATH);
+                        picture.SaveAs(path + product.ID);
+
+                        scope.Complete();
+                    }
+                }
+                else ModelState.AddModelError("", "Hình ảnh không được tìm thấy");
+            }
             ViewBag.CATEGORY_ID = new SelectList(db.CATEGORies, "ID", "CATEGORY_CODE", fOOD.CATEGORY_ID);
-            return View(fOOD);
+            return RedirectToAction("Index");
         }
 
-        // GET: Customer/FOODs/Edit/5
+        // GET: Admin/FOODs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,24 +112,49 @@ namespace CanTeenVLU.Areas.Customer.Controllers
             return View(fOOD);
         }
 
-        // POST: Customer/FOODs/Edit/5
+        // POST: Admin/FOODs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FOOD_CODE,FOOD_NAME,CATEGORY_ID,DESCRIPTION,PRICE,IMAGE_URL,STATUS")] FOOD fOOD)
+        public ActionResult Edit(int id, [Bind(Include = "ID,FOOD_CODE,FOOD_NAME,CATEGORY_ID,DESCRIPTION,PRICE,IMAGE_URL,STATUS")] FOOD fOOD, HttpPostedFileBase picture)
         {
             if (ModelState.IsValid)
             {
+                var product = db.FOODs.Find(id);
+                if (ModelState.IsValid)
+                {
+                    using (var scope = new TransactionScope())
+                    {
+                        product.ID = fOOD.ID;
+                        product.FOOD_CODE = fOOD.FOOD_CODE;
+                        product.FOOD_NAME = fOOD.FOOD_NAME;
+                        product.CATEGORY_ID = fOOD.CATEGORY_ID;
+                        product.DESCRIPTION = fOOD.DESCRIPTION;
+                        product.PRICE = fOOD.PRICE;
+                        product.STATUS = fOOD.STATUS;
+
+                        db.Entry(product).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        if (picture != null)
+                        {
+                            var path = Server.MapPath(PICTURE_PATH);
+                            picture.SaveAs(path + product.ID);
+                        }
+
+                        scope.Complete();
+                        return RedirectToAction("Index");
+
+                    }
+                }
                 db.Entry(fOOD).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
             ViewBag.CATEGORY_ID = new SelectList(db.CATEGORies, "ID", "CATEGORY_CODE", fOOD.CATEGORY_ID);
             return View(fOOD);
         }
 
-        // GET: Customer/FOODs/Delete/5
+        // GET: Admin/FOODs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -111,7 +169,7 @@ namespace CanTeenVLU.Areas.Customer.Controllers
             return View(fOOD);
         }
 
-        // POST: Customer/FOODs/Delete/5
+        // POST: Admin/FOODs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CanTeenVLU.Models.MENU>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QUANTITY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRICE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT.EMAIL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FOOD.FOOD_CODE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QUANTITY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRICE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATUS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT.EMAIL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FOOD.FOOD_CODE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

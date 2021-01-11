@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\ORDERsController.cs" />
     <Compile Include="Areas\Admin\Middleware\LoginVerification.cs" />
     <Compile Include="Areas\Customer\Controllers\FOODsController.cs" />
+    <Compile Include="Areas\Customer\Controllers\MENUsController.cs" />
     <Compile Include="Areas\Customer\Controllers\ORDER_DETAILController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -414,6 +415,11 @@
     <Content Include="Areas\Customer\Views\ORDER_DETAIL\Details.cshtml" />
     <Content Include="Areas\Customer\Views\ORDER_DETAIL\Edit.cshtml" />
     <Content Include="Areas\Customer\Views\ORDER_DETAIL\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\MENUs\Create.cshtml" />
+    <Content Include="Areas\Customer\Views\MENUs\Delete.cshtml" />
+    <Content Include="Areas\Customer\Views\MENUs\Details.cshtml" />
+    <Content Include="Areas\Customer\Views\MENUs\Edit.cshtml" />
+    <Content Include="Areas\Customer\Views\MENUs\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\dashboard.js" />

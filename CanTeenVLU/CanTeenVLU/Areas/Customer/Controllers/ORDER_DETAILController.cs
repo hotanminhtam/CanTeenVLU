@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -14,125 +15,80 @@ namespace CanTeenVLU.Areas.Customer.Controllers
     {
         private QUANLYCANTEENEntities db = new QUANLYCANTEENEntities();
 
-        private List<FOOD> ShoppingCart = null;
+        private List<MENU> ShoppingCart = null;
 
         private void GetShoppingCart()
         {
             if (Session["ShoppingCart"] != null)
-                ShoppingCart = Session["ShoppingCart"] as List<FOOD>;
+                ShoppingCart = Session["ShoppingCart"] as List<MENU>;
             else
             {
-                ShoppingCart = new List<FOOD>();
+                ShoppingCart = new List<MENU>();
                 Session["ShoppingCart"] = ShoppingCart;
             }
         }
-        // GET: Customer/ORDER_DETAIL
+        // GET: ShoppingCart
         public ActionResult Index()
         {
-            var oRDER_DETAIL = db.ORDER_DETAIL.Include(o => o.MENU).Include(o => o.ORDER);
-            return View(oRDER_DETAIL.ToList());
-        }
-
-        // GET: Customer/ORDER_DETAIL/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
+            GetShoppingCart();
+            var hashtable = new Hashtable();
+            foreach (var billDetail in ShoppingCart)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (hashtable[billDetail.FOOD.ID] != null)
+                {
+                    (hashtable[billDetail.FOOD.ID] as MENU).QUANTITY += billDetail.QUANTITY;
+                }
+                else hashtable[billDetail.FOOD.ID] = billDetail;
             }
-            ORDER_DETAIL oRDER_DETAIL = db.ORDER_DETAIL.Find(id);
-            if (oRDER_DETAIL == null)
-            {
-                return HttpNotFound();
-            }
-            return View(oRDER_DETAIL);
+
+            ShoppingCart.Clear();
+            foreach (MENU billDetail in hashtable.Values)
+                ShoppingCart.Add(billDetail);
+            return View(ShoppingCart);
         }
 
-        // GET: Customer/ORDER_DETAIL/Create
-        public ActionResult Create()
+        // GET: ShoppingCart/Create
+        public ActionResult Create(int productId, int quantity)
         {
-            ViewBag.MENU_ID = new SelectList(db.MENUs, "ID", "ID");
-            ViewBag.ORDER_ID = new SelectList(db.ORDERs, "ID", "ORDER_CODE");
-            return View();
+            GetShoppingCart();
+            var product = db.FOODs.Find(productId);
+            ShoppingCart.Add(new MENU
+            {
+                FOOD = product,
+                QUANTITY = quantity
+            });
+
+            return RedirectToAction("Index");
         }
 
-        // POST: Customer/ORDER_DETAIL/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // GET: ShoppingCart/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ORDER_ID,MENU_ID,QUANTITY,PRICE")] ORDER_DETAIL oRDER_DETAIL)
+        public ActionResult Edit(int[] product_id, int[] quantity)
         {
-            if (ModelState.IsValid)
-            {
-                db.ORDER_DETAIL.Add(oRDER_DETAIL);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            GetShoppingCart();
+            ShoppingCart.Clear();
+            if (product_id != null)
+                for (int i = 0; i < product_id.Length; i++)
+                    if (quantity[i] > 0)
+                    {
+                        var product = db.FOODs.Find(product_id[i]);
+                        ShoppingCart.Add(new MENU
+                        {
+                            FOOD = product,
+                            QUANTITY = quantity[i]
+                        });
+                    }
+            Session["ShoppingCart"] = ShoppingCart;
 
-            ViewBag.MENU_ID = new SelectList(db.MENUs, "ID", "ID", oRDER_DETAIL.MENU_ID);
-            ViewBag.ORDER_ID = new SelectList(db.ORDERs, "ID", "ORDER_CODE", oRDER_DETAIL.ORDER_ID);
-            return View(oRDER_DETAIL);
+            return RedirectToAction("Index");
         }
 
-        // GET: Customer/ORDER_DETAIL/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: ShoppingCart/Delete/5
+        public ActionResult Delete()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ORDER_DETAIL oRDER_DETAIL = db.ORDER_DETAIL.Find(id);
-            if (oRDER_DETAIL == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MENU_ID = new SelectList(db.MENUs, "ID", "ID", oRDER_DETAIL.MENU_ID);
-            ViewBag.ORDER_ID = new SelectList(db.ORDERs, "ID", "ORDER_CODE", oRDER_DETAIL.ORDER_ID);
-            return View(oRDER_DETAIL);
-        }
-
-        // POST: Customer/ORDER_DETAIL/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ORDER_ID,MENU_ID,QUANTITY,PRICE")] ORDER_DETAIL oRDER_DETAIL)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(oRDER_DETAIL).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.MENU_ID = new SelectList(db.MENUs, "ID", "ID", oRDER_DETAIL.MENU_ID);
-            ViewBag.ORDER_ID = new SelectList(db.ORDERs, "ID", "ORDER_CODE", oRDER_DETAIL.ORDER_ID);
-            return View(oRDER_DETAIL);
-        }
-
-        // GET: Customer/ORDER_DETAIL/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ORDER_DETAIL oRDER_DETAIL = db.ORDER_DETAIL.Find(id);
-            if (oRDER_DETAIL == null)
-            {
-                return HttpNotFound();
-            }
-            return View(oRDER_DETAIL);
-        }
-
-        // POST: Customer/ORDER_DETAIL/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            ORDER_DETAIL oRDER_DETAIL = db.ORDER_DETAIL.Find(id);
-            db.ORDER_DETAIL.Remove(oRDER_DETAIL);
-            db.SaveChanges();
+            GetShoppingCart();
+            ShoppingCart.Clear();
+            Session["ShoppingCart"] = ShoppingCart;
             return RedirectToAction("Index");
         }
 

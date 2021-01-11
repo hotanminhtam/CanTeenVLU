@@ -249,12 +249,11 @@
                                     <div class="single-products">
                                         <div class="productinfo text-center">
                                             <a href="@Url.Action("Details", new { products.ID })">
-                                                <img src="@Url.Action("IMAGE_URL","FOODs", new { products.ID})" alt="" />
+                                                <img src="@Url.Action("Picture","FOODs", new { products.ID})" alt="" />
                                             </a>
                                             <h4><a href="@Url.Action("Details", new { products.ID })">@products.FOOD_NAME</a></h4>
                                             <h2><a href="@Url.Action("Details", new { products.ID })">@products.PRICE.ToString("N0")</a></h2>
                                             <form action="@Url.Action("Create", "ShoppingCart")" method="post">
-                                                <input type="hidden" name="ProductId" value="@products.ID" />
                                                 <div class="choose">
                                                     <ul class="nav nav-pills nav-justified">
                                                         <li><a href="#"><i class="fa fa-plus-square"></i>Yêu thích</a></li>

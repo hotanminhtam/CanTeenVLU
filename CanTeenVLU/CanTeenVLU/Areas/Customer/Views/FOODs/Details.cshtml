@@ -233,7 +233,7 @@
                                 <dt>Hình ảnh</dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.IMAGE_URL)
+                                    <img id="Picture" src="@Url.Action("Picture", new { Model.ID})" width="300" />
                                 </dd>
 
                                 <dt>Trạng thái</dt>
@@ -244,8 +244,17 @@
                             </dl>
                         </div>
                         <div class="card_area">
-                            <form action="@Url.Action("Create", "ShoppingCart")" method="post">
+                            <form action="@Url.Action("Create", "ORDER_DETAIL")" method="post">
                                 <input type="hidden" name="ProductId" value="@Model.ID" />
+                                <div class="product_count_area">
+                                    <p>Số lượng</p>
+                                    <div class="cart_quantity_button">
+                                        <a class="cart_quantity_up" href=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> + </font></font></a>
+                                        <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down" href=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - </font></font></a>
+                                    </div>
+                                    <p>@Model.PRICE.ToString("N0") VNĐ</p>
+                                </div>
                                 <div class="add_to_cart">
                                     <i class="fas fa-cart-plus fa-2x">
                                         <input type="submit" class="btn btn-default add-to-cart" value="Thêm vào giỏ hàng" />

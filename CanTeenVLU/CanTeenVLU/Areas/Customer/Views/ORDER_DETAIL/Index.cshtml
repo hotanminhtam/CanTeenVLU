@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CanTeenVLU.Models.ORDER_DETAIL>
+﻿@model IEnumerable<CanTeenVLU.Models.MENU>
 
 @{
     Layout = null;
@@ -98,7 +98,7 @@
                             <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
                                 <li><a href="#"><i class="fa fa-star"></i>Yêu thích</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
+                                <li><a href="/Customer/ORDER_DETAIL/"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
                                 <li><a href="/Admin/Auth/Logout"><i class="fa fa-lock"></i>Đăng xuất</a></li>
                             </ul>
                         </div>
@@ -144,59 +144,59 @@
         </div><!--/header-bottom-->
     </header><!--/header-->
 
-    <div class="container">
-        <div class="table-responsive cart_info">
-            @using (Html.BeginForm("Edit", "ShoppingCart"))
-            {
+    <section id="cart_items">
+        <div class="container">
+            <div class="table-responsive cart_info">
                 <table class="table table-condensed">
                     <thead>
                         <tr class="cart_menu">
-                            <td class="image">Item</td>
-                            <td class="description"></td>
-                            <td class="price">Price</td>
-                            <td class="quantity">Quantity</td>
-                            <td class="total">Total</td>
+                            <td class="image">Hình ảnh</td>
+                            <td class="name">Tên món ăn</td>
+                            <td class="price">Giá (VND)</td>
+                            <td class="quantity">Số lượng</td>
+                            <td class="total">Thành tiền</td>
                             <td></td>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            Subtotal += item.MENU.FOOD.PRICE * item.QUANTITY;
-                            <tr>
-                                <td class="cart_product">
-                                    <a href="@Url.Action("Details", "FOODs", new { item.MENU.FOOD.ID })"><img src="@Url.Action("IMAGE_URL", "FOODs", new { item.MENU.FOOD.ID })" alt="" width="110" height="110"></a>
-                                </td>
-                                <td class="cart_description">
-                                    <a href="@Url.Action("Details", "FOODs", new { item.MENU.FOOD.ID })">
-                                        <h4>@item.MENU.FOOD.FOOD_NAME</h4>
-                                    </a>
-                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></p>
-                                </td>
-                                <td class="cart_price">
-                                    <p><font style="vertical-align: inherit;">@item.MENU.FOOD.PRICE.ToString("N0")<font style="vertical-align: inherit;"> VND</font></font></p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        @Html.Hidden("Product_id", item.MENU.FOOD.ID)
-                                        <a class="fa-google-plus-g" href=""><font style="vertical-align: inherit;"> + </font></a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="@item.MENU.QUANTITY" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""><font style="vertical-align: inherit;"> - </font></a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@((item.MENU.FOOD.PRICE * item.QUANTITY).ToString("N0")) VND</font></font></p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href="@Url.Action("Delete", "Remove")"><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+
+                            Subtotal += item.FOOD.PRICE * item.QUANTITY;
+                        <tr>
+                            <td class="cart_product">
+                                <a href="@Url.Action("Details", "FOODs", new { item.FOOD.ID })"><img src="@Url.Action("Picture", "FOODs", new { item.FOOD.ID })" alt="" width="110" height="110"></a>
+                            </td>
+                            <td class="cart_description">
+                                <a href="@Url.Action("Details", "FOODs", new { item.FOOD.ID })">
+                                    <h4>@item.FOOD.FOOD_NAME</h4>
+                                </a>
+                                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></p>
+                            </td>
+                            <td class="cart_price">
+                                <p><font style="vertical-align: inherit;">@item.FOOD.PRICE.ToString("N0")<font style="vertical-align: inherit;"></font></font></p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    @Html.Hidden("FOOD_ID", item.FOOD.ID)
+                                    <a class="fa-google-plus-g" href=""><font style="vertical-align: inherit;"> + </font></a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="@item.QUANTITY" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down" href=""><font style="vertical-align: inherit;"> - </font></a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@((item.FOOD.PRICE * item.QUANTITY).ToString("N0"))</font></font></p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="@Url.Action("Delete", "ORDER_DETAIL")"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
-            }
+            </div>
         </div>
-    </div>
+    </section> <!--/#cart_items-->
 
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="fa fa-angle-up"></i></a>
 
