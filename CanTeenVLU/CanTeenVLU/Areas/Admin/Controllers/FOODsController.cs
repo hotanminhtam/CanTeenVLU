@@ -23,6 +23,14 @@ namespace CanTeenVLU.Areas.Admin.Controllers
             return View(fOODs.ToList());
         }
 
+        //for customers to view products
+        [AllowAnonymous]
+        public ActionResult Index2()
+        {
+            var model = db.FOODs.ToList();
+            return View(model);
+        }
+
         // GET: Admin/FOODs/Details/5
         public ActionResult Details(int? id)
         {

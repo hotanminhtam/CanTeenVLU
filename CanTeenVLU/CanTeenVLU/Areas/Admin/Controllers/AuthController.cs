@@ -30,7 +30,7 @@ namespace CanTeenVLU.Areas.Admin.Controllers
                     Session["user-fullname"] = user.FULL_NAME;
                     Session["user-id"] = user.ID;
                     Session["user-role"] = user.ROLE;
-                    return RedirectToAction("Index", "CATEGORies");
+                    return Redirect(user.ROLE == 1 ? "/Admin/ACCOUNTs" : user.ROLE == 2 ? "/Admin/CATEGORies" : "/Customer/FOODs");
                 }
                 else
                 {

@@ -1,0 +1,58 @@
+﻿@model CanTeenVLU.Models.ORDER_DETAIL
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>ORDER_DETAIL</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.QUANTITY)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.QUANTITY)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PRICE)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PRICE)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MENU.ID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MENU.ID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ORDER.ORDER_CODE)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ORDER.ORDER_CODE)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

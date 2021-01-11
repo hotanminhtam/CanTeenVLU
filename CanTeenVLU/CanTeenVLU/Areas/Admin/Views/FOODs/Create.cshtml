@@ -49,9 +49,10 @@
 
         <div class="form-group">
             <label class="control-label col-md-2" for="IMG">Hình ảnh</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IMAGE_URL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IMAGE_URL, "", new { @class = "text-danger" })
+            <div class="col-md-4">
+                <input class="form-control" type="file" name="Picture" id="IMG" onchange="readPicture(this)" accept="image/jpeg,image/gif,image/png" />
+                <img id="Picture" />
+
             </div>
         </div>
 

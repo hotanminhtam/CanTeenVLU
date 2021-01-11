@@ -15,6 +15,8 @@ namespace CanTeenVLU.Areas.Admin.Controllers
     public class CATEGORiesController : Controller
     {
         private QUANLYCANTEENEntities db = new QUANLYCANTEENEntities();
+        private const string PICTURE_PATH = "~/Upload/Categories/";
+
 
         // GET: Admin/CATEGORies
         public ActionResult Index()

@@ -1,0 +1,210 @@
+﻿@model IEnumerable<CanTeenVLU.Models.ORDER_DETAIL>
+
+@{
+    Layout = null;
+    var Subtotal = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | CanTeen Văn Lang</title>
+    <link href="~/backend/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/backend/css/prettyPhoto.css" rel="stylesheet" />
+    <link href="~/backend/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/backend/css/price-range.css" rel="stylesheet" />
+    <link href="~/backend/css/animate.css" rel="stylesheet" />
+    <link href="~/backend/css/main.css" rel="stylesheet" />
+    <link href="~/backend/css/responsive.css" rel="stylesheet" />
+    @*[if lt IE 9]>*@
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    @*<![endif]*@
+    <link rel="shortcut icon" href="@Url.Content("~/images/ico/favicon.ico")">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="@Url.Content("~/images/ico/apple-touch-icon-144-precomposed.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/images/ico/apple-touch-icon-114-precomposed.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/images/ico/apple-touch-icon-72-precomposed.png")">
+    <link rel="apple-touch-icon-precomposed" href="@Url.Content("~/images/ico/apple-touch-icon-57-precomposed.png")">
+</head><!--/head-->
+
+<body>
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+
+        <div class="header-middle">
+            <!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                        </div>
+                        <div class="btn-group pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                    VN
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">US</a></li>
+                                    <li><a href="#">UK</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                    VND
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">EUR</a></li>
+                                    <li><a href="#">USD</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
+                                <li><a href="#"><i class="fa fa-star"></i>Yêu thích</a></li>
+                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
+                                <li><a href="/Admin/Auth/Logout"><i class="fa fa-lock"></i>Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="/Customer/FOODS/" class="active">Trang chủ</a></li>
+                                <li><a href="/Customer/FOODS/">Thực đơn</a></li>
+                                <li class="dropdown">
+                                    <a href="#">Thông tin<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="blog.html">Blog List</a></li>
+                                        <li><a href="blog-single.html">Blog Single</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="search_box pull-right">
+                            <input type="text" placeholder="Tìm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-bottom-->
+    </header><!--/header-->
+
+    <div class="container">
+        <div class="table-responsive cart_info">
+            @using (Html.BeginForm("Edit", "ShoppingCart"))
+            {
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">Item</td>
+                            <td class="description"></td>
+                            <td class="price">Price</td>
+                            <td class="quantity">Quantity</td>
+                            <td class="total">Total</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            Subtotal += item.MENU.FOOD.PRICE * item.QUANTITY;
+                            <tr>
+                                <td class="cart_product">
+                                    <a href="@Url.Action("Details", "FOODs", new { item.MENU.FOOD.ID })"><img src="@Url.Action("IMAGE_URL", "FOODs", new { item.MENU.FOOD.ID })" alt="" width="110" height="110"></a>
+                                </td>
+                                <td class="cart_description">
+                                    <a href="@Url.Action("Details", "FOODs", new { item.MENU.FOOD.ID })">
+                                        <h4>@item.MENU.FOOD.FOOD_NAME</h4>
+                                    </a>
+                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></p>
+                                </td>
+                                <td class="cart_price">
+                                    <p><font style="vertical-align: inherit;">@item.MENU.FOOD.PRICE.ToString("N0")<font style="vertical-align: inherit;"> VND</font></font></p>
+                                </td>
+                                <td class="cart_quantity">
+                                    <div class="cart_quantity_button">
+                                        @Html.Hidden("Product_id", item.MENU.FOOD.ID)
+                                        <a class="fa-google-plus-g" href=""><font style="vertical-align: inherit;"> + </font></a>
+                                        <input class="cart_quantity_input" type="text" name="quantity" value="@item.MENU.QUANTITY" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down" href=""><font style="vertical-align: inherit;"> - </font></a>
+                                    </div>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@((item.MENU.FOOD.PRICE * item.QUANTITY).ToString("N0")) VND</font></font></p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete" href="@Url.Action("Delete", "Remove")"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="fa fa-angle-up"></i></a>
+
+    <script src="~/Scripts/js/jquery.js"></script>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Scripts/js/price-range.js"></script>
+    <script src="~/Scripts/js/jquery.prettyPhoto.js"></script>
+    <script src="~/Scripts/js/main.js"></script>
+</body>
+</html>
